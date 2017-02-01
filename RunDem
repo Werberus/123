@@ -14,7 +14,7 @@ class RunDem extends Thread{
 		this.log=log;
 		this.port=port;
 		this.pass=pass;
-		t = new Thread(this, log);
+		t = new Thread(this, host);
 		t.start();
 		
 	}	
