@@ -1,0 +1,52 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+
+public class Swing extends JFrame {
+	String  host;
+	String  log;
+	String     port1;
+	int     port;
+	String  pass;
+	
+	
+	Swing(){
+		
+		//super();
+		JFrame jf= new JFrame("ЧТОТЫТАКОЕ?");
+		jf.setLayout(new FlowLayout(FlowLayout.CENTER));
+		jf.setSize(300,250);
+		jf.setLocation(500, 500);
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JTextField jt  = new JTextField("login ", 20); // login
+		jt.setLocation(30, 30);
+		JTextField jt2  = new JTextField("host ", 20); // pass
+		JTextField jt3  = new JTextField("port ", 20);
+		JTextField jt4  = new JTextField("pass ", 20);
+		JButton b1=new JButton("А Потом тык меня");
+		jf.add(jt);
+		jf.add(jt2);
+		jf.add(jt3);
+		jf.add(jt4);
+		jf.add(b1);
+		jf.setVisible(true);
+		
+		b1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ae) {
+				host=jt2.getText();
+				 log=jt.getText();
+				 port1=jt3.getText();
+				 port= Integer.valueOf(port1);
+				 pass=jt4.getText();
+				RunDem a = new RunDem(log,  host,  port,  pass);
+				
+				
+				//name=jt2.getText();
+				//RunDem a1 = new RunDem(name);
+				
+			}
+		});
+	}
+	
+}
