@@ -1,11 +1,16 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+//import javax.swing.tree.DefaultMutableTreeNode;
 
 
 public class Swing extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String  host;
-	String  log;
+	String  User;
 	String     port1;
 	int     port;
 	String  pass;
@@ -15,16 +20,65 @@ public class Swing extends JFrame {
 		
 		//super();
 		JFrame jf= new JFrame("ЧТОТЫТАКОЕ?");
-		jf.setLayout(new FlowLayout(FlowLayout.CENTER));
-		jf.setSize(300,250);
+		//jf.setLayout(new FlowLayout(FlowLayout.CENTER));
+		jf.setLayout(null);
+		jf.setSize(400,250);
 		jf.setLocation(500, 500);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JTextField jt  = new JTextField("login ", 20); // login
+		JTextField jt  = new JTextField(20); // login
 		jt.setLocation(30, 30);
-		JTextField jt2  = new JTextField("host ", 20); // pass
-		JTextField jt3  = new JTextField("port ", 20);
-		JTextField jt4  = new JTextField("pass ", 20);
-		JButton b1=new JButton("А Потом тык меня");
+	//	JTextField jt2  = new JTextField(20); // pass
+		JPasswordField jt2  = new JPasswordField(20);
+		JTextField jt3  = new JTextField(20);
+		JTextField jt4  = new JTextField(20);
+		//JPasswordField jt4 = new JPasswordField("pass ",20);
+		//jt4.setEchoChar('*');
+		JCheckBox cb= new JCheckBox("кек");
+		cb.setLocation(210, 5);
+		cb.setSize(60, 30);
+		jf.add(cb);
+		
+		JCheckBox cb2= new JCheckBox("lol");
+		cb2.setLocation(210, 35);
+		cb2.setSize(60, 30);
+		jf.add(cb2);
+		
+		JButton b1=new JButton("Start");	
+		b1.setLocation(60, 120);
+		b1.setSize(120, 40);
+		
+		JLabel l=new JLabel("User");
+		l.setLocation(10, 20);
+		l.setSize(40, 20);
+		jf.add(l);
+		
+		jt.setLocation(60, 20);
+		jt.setSize(120, 20);
+		
+		l=new JLabel("Pass");
+		l.setLocation(10, 45);
+		l.setSize(40, 20);
+		jf.add(l);
+		
+		jt2.setLocation(60, 45);
+		jt2.setSize(120, 20);
+		
+		l=new JLabel("Port");
+		l.setLocation(10, 70);
+		l.setSize(40, 20);
+		jf.add(l);
+		
+		jt3.setLocation(60, 70);
+		jt3.setSize(120, 20);
+		
+		l=new JLabel("Host ip");
+		l.setLocation(10, 95);
+		l.setSize(40, 20);
+		jt4.setLocation(60, 95);
+		jt4.setSize(120, 20);
+		
+		
+		jf.add(l);
 		jf.add(jt);
 		jf.add(jt2);
 		jf.add(jt3);
@@ -32,19 +86,51 @@ public class Swing extends JFrame {
 		jf.add(b1);
 		jf.setVisible(true);
 		
+	//	DefaultMutableTreeNode dmtn=new DefaultMutableTreeNode ("f");
+		
+	//	JTree jtree1= new JTree(dmtn);
+		
+	//	jf.add(jtree1);
+		
+		
 		b1.addActionListener(new ActionListener(){
+			@SuppressWarnings("deprecation")
+			
 			public void actionPerformed(ActionEvent ae) {
-				host=jt2.getText();
-				 log=jt.getText();
+				host=jt4.getText();
+				 User=jt.getText();
 				 port1=jt3.getText();
+				 try{
 				 port= Integer.valueOf(port1);
-				 pass=jt4.getText();
-				RunDem a = new RunDem(log,  host,  port,  pass);
+				 new RunDem(User,  host,  port,  pass);}
+				 catch(Exception e){ 
+					 JFrame jfport= new JFrame("Error "+host); 
+					// jfport.setDefaultCloseOperation(JFrame.???);
+					 jfport.setVisible(true);
+					 jfport.setSize(200,100);
+					 jfport.setLocation(500, 600);
+					 JLabel l=new JLabel("Неверное значение порта!");
+					 jfport.setLayout(new FlowLayout());
+					 jfport.add(l);
+				 }
+				 pass=jt2.getText();
+			//	RunDem a = new RunDem(log,  host,  port,  pass);
+				
 				
 				
 				//name=jt2.getText();
 				//RunDem a1 = new RunDem(name);
 				
+			}
+			
+		});
+		cb.addItemListener(new ItemListener() {
+		public void itemStateChanged (ItemEvent ie) {
+			//cb=(JCheckBox) ie.getItem();
+			if(cb.isSelected()){
+				// Сделать что то 
+			}
+			
 			}
 		});
 	}
