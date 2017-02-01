@@ -18,42 +18,35 @@ class RunDem extends Thread{
 		t.start();
 	
 	}	
-	/*
-	RunDem(String log){
-		
-		t = new Thread(this, log);
-		t.start();
-	}*/
-		
-		
+	
 		//Тут то что будет выполнятся в каждом новом потоке
 		public void run() {
 		String a="0";
-			try{
+			
 				JFrame jf= new JFrame(t.getName());
 				jf.setLayout(new FlowLayout());
 				jf.setSize(500,150);
 				jf.setLocation(300, 300);
 				//jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				jf.setVisible(true);
-				JLabel l=new JLabel("Паралельное выполнение в потоке: "+t.getName());
+				JLabel l=new JLabel("Подключение к "+t.getName());
 				jf.add(l);
 				JLabel l2=new JLabel(a);
 				jf.add(l2);
-				for(int i=1; i<20; i++){
+				try{
+				for(int i=1; i<6; i++){
 					 a = Integer.toString(i);
 					 l2.setText(a);
-					Thread.sleep(1300);
+					Thread.sleep(1000);
 				}
-			System.out.println(t);
 				}
-			catch(Exception e){
-				System.out.println("Прерван 1");
-			}
+				catch(Exception e){
+					System.out.println("Тут что то может пойти не так??");
+				}		
 			
-			//testConnectionSSH testcon = new testConnectionSSH(log, host, port, pass);        //testConnectionSSH testcon = new testConnectionSSH("root", "192.168.1.52", 22, "123456");
-	        new testConnectionSSH(User, host, port, pass);
-			
+//			testConnectionSSH testcon = new testConnectionSSH(User, host, port, pass);  
+		//testConnectionSSH testcon = new testConnectionSSH("root", "192.168.1.52", 22, "123456");
+	       new testConnectionSSH(User, host, port, pass);
+	       
 		}
-
 	}
