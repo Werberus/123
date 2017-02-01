@@ -36,14 +36,20 @@ class RunDem extends Thread{
 				try{
 				for(int i=1; i<6; i++){
 					 a = Integer.toString(i);
-					 l2.setText(a);
+					 l2.setText("    "+a);
 					Thread.sleep(1000);
 				}
 				}
 				catch(Exception e){
 					System.out.println("Тут что то может пойти не так??");
 				}		
-			
+				if(!jf.isVisible())
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				//jf.setDefaultCloseOperation(JFrame.);
 //			testConnectionSSH testcon = new testConnectionSSH(User, host, port, pass);  
 		//testConnectionSSH testcon = new testConnectionSSH("root", "192.168.1.52", 22, "123456");
 	       new testConnectionSSH(User, host, port, pass);
