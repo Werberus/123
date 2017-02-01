@@ -23,8 +23,7 @@ public class Swing extends JFrame {
 		jt.setLocation(30, 30);
 		JTextField jt2  = new JTextField("host ", 20); // pass
 		JTextField jt3  = new JTextField("port ", 20);
-		JPasswordField jt4 = new JPasswordField("pass ",20);
-		jt4.setEchoChar('*');
+		JTextField jt4  = new JTextField("pass ", 20);
 		JButton b1=new JButton("А Потом тык меня");
 		jf.add(jt);
 		jf.add(jt2);
