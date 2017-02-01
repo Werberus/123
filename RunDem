@@ -42,7 +42,8 @@ class RunDem extends Thread{
 				}
 				catch(Exception e){
 					System.out.println("Тут что то может пойти не так??");
-				}		
+				}
+				//Остановка потка при закрытии формы
 				if(!jf.isVisible())
 					try {
 						wait();
@@ -50,9 +51,9 @@ class RunDem extends Thread{
 						e.printStackTrace();
 					}
 				//jf.setDefaultCloseOperation(JFrame.);
-//			testConnectionSSH testcon = new testConnectionSSH(User, host, port, pass);  
-		//testConnectionSSH testcon = new testConnectionSSH("root", "192.168.1.52", 22, "123456");
-	       new testConnectionSSH(User, host, port, pass);
+//	testConnectionSSH testcon = new testConnectionSSH(User, host, port, pass);  
+//	testConnectionSSH testcon = new testConnectionSSH("root", "192.168.1.52", 22, "123456");
+	   new testConnectionSSH(User, host, port, pass);
 	       
 		}
 	}
