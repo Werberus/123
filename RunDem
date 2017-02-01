@@ -5,27 +5,34 @@ import javax.swing.*;
 class RunDem extends Thread{
 	Thread t;
 	private String host;
-	private String log;
+	private String User;
 	private String pass;
 	private int port;
 
-	RunDem(String log, String host, int port, String pass){
+	RunDem(String User, String host, int port, String pass){
 		this.host=host;
-		this.log=log;
+		this.User=User;
 		this.port=port;
 		this.pass=pass;
 		t = new Thread(this, host);
 		t.start();
-		
+	
 	}	
+	/*
+	RunDem(String log){
+		
+		t = new Thread(this, log);
+		t.start();
+	}*/
+		
+		
 		//Тут то что будет выполнятся в каждом новом потоке
 		public void run() {
 		String a="0";
 			try{
-				/*JFrame jf= new JFrame(t.getName());
+				JFrame jf= new JFrame(t.getName());
 				jf.setLayout(new FlowLayout());
 				jf.setSize(500,150);
-				//If(c==1)
 				jf.setLocation(300, 300);
 				//jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				jf.setVisible(true);
@@ -38,13 +45,14 @@ class RunDem extends Thread{
 					 l2.setText(a);
 					Thread.sleep(1300);
 				}
-			System.out.println(t);*/
+			System.out.println(t);
 				}
 			catch(Exception e){
 				System.out.println("Прерван 1");
 			}
-			testConnectionSSH testcon = new testConnectionSSH(log, host, port, pass);        //testConnectionSSH testcon = new testConnectionSSH("root", "192.168.1.52", 22, "123456");
-	        new testConnectionSSH(log, host, port, pass);
+			
+			//testConnectionSSH testcon = new testConnectionSSH(log, host, port, pass);        //testConnectionSSH testcon = new testConnectionSSH("root", "192.168.1.52", 22, "123456");
+	        new testConnectionSSH(User, host, port, pass);
 			
 		}
 
