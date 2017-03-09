@@ -1,0 +1,140 @@
+package config;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import java.util.Map;
+
+import org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.*;
+
+public class ConfigReader extends DefaultHandler {
+    // Структуру xml файла смотри тут: https://github.com/faurik/RemoteControl/blob/master/config/config.xml
+
+    //возвращает имя корня дерева
+    public static String getRootOfTree() {
+        SAXPars.isBranchStartSaxPars("RootTree");
+        Map<String, String> data=SAXPars.getData();
+
+        for (Map.Entry<String, String> dMap:data.entrySet()){
+            if(dMap.getKey()=="2"){
+                return dMap.getValue();
+               // System.out.println(dMap.getValue());
+
+            }
+        }
+       return "0";
+    }
+
+    //возвращает имя членов дерева, которые прям под корнем (сначала ветви, потом листья)
+    public static ArrayList<String> getLvl2OfTree() {
+        ArrayList<String> BranchesOfTree = new ArrayList<>();
+        SAXPars.isBranchStartSaxPars(getRootOfTree());
+        Map<String, String> data=SAXPars.getData();
+
+        for (Map.Entry<String, String> dMap:data.entrySet()){
+           //  System.out.println(dMap.getKey()+" -- "+dMap.getValue());
+            if(dMap.getKey()!="3"&&dMap.getKey()!="2"){
+                // System.out.println(dMap.getValue());
+                BranchesOfTree.add(dMap.getValue());
+            }
+        }
+        return BranchesOfTree;
+    }
+
+    // Для ветви с именем name возвращает имена ее листьев
+    public static ArrayList<String> getLeafsOfBranch(String name) {
+        ArrayList<String> LeafsOfBranches = new ArrayList<>();
+        SAXPars.isBranchStartSaxPars(name);
+        Map<String, String> data=SAXPars.getData();
+
+        for (Map.Entry<String, String> dMap:data.entrySet()){
+            if(dMap.getKey()!="1"&&dMap.getKey()!="3"){
+              // System.out.println(dMap.getValue());
+                LeafsOfBranches.add(dMap.getValue());
+                }
+        }
+        return LeafsOfBranches;
+    }
+
+    // true, если узел дерева с именем name - ветвь
+    public static boolean isBranch(String name) {
+
+        SAXPars.isBranchStartSaxPars(name);
+        Map<String, String> data=SAXPars.getData();
+
+        for (Map.Entry<String, String> dMap:data.entrySet()){
+             //  System.out.println(dMap.getKey()+" -- "+dMap.getValue());
+            if(dMap.getKey()=="1"){
+                return true;}
+        }
+
+    return false;
+
+    }
+
+    // Для листа name возвращает значение параметра property (логин, например)
+    public static String getPropValue(String name, String property) {
+
+        SAXPars.getPropValueStartSaxPars(property, name);
+        String propValue=null;
+        Map<String, String> data=SAXPars.getData();
+
+        for (Map.Entry<String, String> dMap:data.entrySet()){
+           // System.out.println(dMap.getKey()+" -- "+dMap.getValue());
+                        if(dMap.getKey()!="") propValue =dMap.getKey();
+
+        }
+
+        return propValue;
+    }
+
+    // true, если узел дерева с именем name существует. Нужен, чтобы не создавать узлы с одинаковыми именами
+    static boolean checkNodeName(String name) {
+        SAXPars.isBranchStartSaxPars(name);
+        Map<String, String> data=SAXPars.getData();
+
+        for (Map.Entry<String, String> dMap:data.entrySet()){
+            //  System.out.println(dMap.getKey()+" -- "+dMap.getValue());
+            if(dMap.getKey()=="3"){
+                return true;}
+        }
+
+      return false;
+    }
+
+    // Возвращает Document xml. Нужен, чтобы в каждом методе этого пакета строки:
+    // DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    // DocumentBuilder db = dbf.newDocimentBuilder();
+    // Document document = db.parse(new File("filename"));
+    static Document getDocument() {
+        try {
+            return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File("config.xml"));
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
+
+// Чтоб потестить
+    public static void main(String args[]) {
+       //System.out.println( getPropValue("Белгород", "Username"));
+       // System.out.println(getLeafsOfBranch("МР Центр"));
+       // System.out.println(isBranch("МР Юг"));
+       // System.out.println(getLvl2OfTree());
+       // System.out.println(getRootOfTree());
+        //System.out.println(checkNodeName("Песька"));
+    }
+}
