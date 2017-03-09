@@ -1,0 +1,149 @@
+package config;
+
+import org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+public class SAXPars extends DefaultHandler {
+
+    private static Map<String, String> data = new HashMap<String, String>();
+
+    private String name1; // id name="Тамбов"
+    private String elements; //'элемент teg  например Leaf
+
+    private String name;
+    private String element; //надо его принимать
+    private String named;// ="Password"; //надо его принимать
+    private String namedroot;
+
+    SAXPars(){}
+
+    SAXPars(String element, String name){
+        this.element=element; 
+        this.name=name;
+    }
+
+    SAXPars( String name){
+        this.name=name;
+    }
+
+
+
+    public static void getPropValueStartSaxPars(String element,String name){
+
+        SAXPars saxpars = new SAXPars(element, name); // тут он сука принимает значения
+        SAXParserFactory parser = SAXParserFactory.newInstance();
+        try {
+            SAXParser saxparse = parser.newSAXParser();
+            try {
+                saxparse.parse(new File("config.xml"), saxpars);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void isBranchStartSaxPars(String name){
+        SAXPars saxpars = new SAXPars(name); // тут он сука принимает значения
+        SAXParserFactory parser = SAXParserFactory.newInstance();
+        try {
+            SAXParser saxparse = parser.newSAXParser();
+            try {
+                saxparse.parse(new File("config.xml"), saxpars);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+    public void startDocument()throws SAXException{
+       // System.out.println("start... ");
+
+    }
+
+    public void endDocument()throws SAXException{
+       // System.out.print(" end...");
+    }
+
+    @Override
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+       // super.startElement(uri, localName, qName, attributes);
+        elements=qName;
+        if (elements.equals("Leaf")) {
+            name1 = attributes.getValue(0);
+            if (named.equals(name)){
+                data.put(name1, name1);
+            }
+            if(namedroot.equals(name)){
+                if(named==""){
+                data.put(name1, name1);}
+            }
+            if(name.equals(name1)){data.put("3", name1);}
+        }
+
+        if (elements.equals("Branch")){
+            name1 = attributes.getValue(0);
+            named=name1;
+            if (named.equals(name)){
+            data.put("1", named);
+                }
+            if(namedroot.equals(name)){
+                data.put(name1, name1);
+            }
+            if(name.equals(name1)){data.put("3", name1);}
+        }
+
+        if (elements.equals("RootTree")){
+            name1 = attributes.getValue(0);
+            namedroot=name1;
+            if (elements.equals(name)){
+                data.put("2", name1);
+            }
+
+            if(name.equals(name1)){data.put("3", name1);}
+        }
+
+
+
+    }
+
+    public void endElement(String uri, String localName, String qName) throws SAXException {
+      //  super.startElement(uri, localName, qName, attributes);
+        elements=qName;
+        if (elements.equals("Branch")){named="";}
+        elements="";
+        name1 = "";
+
+    }
+
+
+    public void characters(char []ch, int start, int end){
+        if (elements.equals(element)) {
+            String str= new String(ch,  start,  end);
+            if (name1.equals(name)){
+        data.put(str, name1);}
+        }
+    }
+
+    public static Map<String, String> getData(){
+        return data;
+    }
+}
